@@ -26,17 +26,22 @@ should be required.
 Working MVP. Reading and Vocab modes are implemented; Grammar is a placeholder.
 See `docs/spec.md` for the full spec.
 
-Translation goes through a public **LibreTranslate** instance
-(`translate.argosopentech.com` by default — no key required). Public
-instances move around, so the endpoint and key are editable under
-**Settings** in the app; `translate.terraprint.co` is a good fallback. To
-run your own with no limits:
+Translation runs on a **local LibreTranslate** instance (which is Argos
+Translate with an HTTP API on top). One-time setup:
 
 ```
-docker run -ti --rm -p 5000:5000 libretranslate/libretranslate
+pip install libretranslate
+libretranslate --load-only en,fr,ru
 ```
 
-then set the URL to `http://localhost:5000`.
+Leave it running on `http://localhost:5000` — the app points there by default.
+First start downloads the language models, so give it a minute. French→Russian
+pivots through English automatically.
+
+If you'd rather not run anything locally, the endpoint and API key are editable
+under **Settings** in the app, so you can point it at any public LibreTranslate
+instance instead. Most now require a free key or are offline, which is why
+local is the default.
 
 Reading mode fetches URLs through `r.jina.ai`, which handles CORS and article
 extraction in one request. If a page won't load, paste the text instead.

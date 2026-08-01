@@ -2,10 +2,11 @@
 // key, so the endpoint + key live in localStorage and are editable in the UI.
 // Self-host fallback: docker run -p 5000:5000 libretranslate/libretranslate
 
-// Verified public instances (no API key needed): argosopentech.com is the
-// project's own documented default. terraprint.co is the fallback if it's
-// ever down. Full list: https://github.com/LibreTranslate/LibreTranslate#mirrors
-const LT_DEFAULT = 'https://translate.argosopentech.com';
+// Defaults to a local LibreTranslate (Argos Translate under the hood):
+//   pip install libretranslate && libretranslate --load-only en,fr,ru
+// Public instances are unreliable and mostly key-gated now; point the URL at
+// one under Settings if you'd rather not run your own.
+const LT_DEFAULT = 'http://localhost:5000';
 
 const Translate = {
   url() {
@@ -23,11 +24,18 @@ const Translate = {
     const body = { q: text, source: 'fr', target, format: 'text' };
     if (this.key()) body.api_key = this.key();
 
-    const res = await fetch(this.url() + '/translate', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
-    });
+    let res;
+    try {
+      res = await fetch(this.url() + '/translate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+    } catch {
+      // fetch only throws for network-level failures, which here almost always
+      // means nothing is listening on the configured URL.
+      throw new Error('cannot reach ' + this.url() + ' — is LibreTranslate running?');
+    }
     if (!res.ok) throw new Error('translate ' + res.status + ' from ' + this.url());
     return (await res.json()).translatedText;
   },
