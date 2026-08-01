@@ -39,8 +39,13 @@ then set the URL to `http://localhost:5000`.
 Reading mode fetches URLs through `r.jina.ai`, which handles CORS and article
 extraction in one request. If a page won't load, paste the text instead.
 
-## Dev setup
-No build step. Open `index.html` directly, or serve the folder statically:
+## Install
+```
+git clone https://github.com/alibekk93/French-app.git
+cd French-app
+```
+No build step, no dependencies. Open `index.html` in a browser, or serve it
+statically:
 
 ```
 python3 -m http.server 8000
