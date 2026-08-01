@@ -14,6 +14,15 @@
       <button data-mode="vocab">Vocab</button>
       <button data-mode="grammar">Grammar</button>
     </nav>
+    <details id="settings">
+      <summary>Settings</summary>
+      <div class="row">
+        <label>LibreTranslate URL <input id="lt-url" size="34"></label>
+        <label>API key (if required) <input id="lt-key" size="20"></label>
+        <button id="lt-save">Save</button>
+        <span id="lt-status" class="status"></span>
+      </div>
+    </details>
   </header>
 
   <main id="app"></main>

@@ -2,6 +2,6 @@
 
 const GrammarMode = {
   render(container) {
-    // not implemented
+    container.innerHTML = '<section class="pane"><h2>Grammar</h2><p>Not built yet.</p></section>';
   },
 };

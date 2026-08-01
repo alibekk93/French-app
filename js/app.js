@@ -1,22 +1,32 @@
-// Entry point. Wires up the mode switcher and renders the active mode
-// into #app. Each mode module (reading.js / vocab.js / grammar.js) is
-// expected to expose a `render(container)` function once implemented.
+// Entry point: mode switching + LibreTranslate settings.
 
-const modes = {
-  reading: null, // TODO: window.ReadingMode.render
-  vocab: null,   // TODO: window.VocabMode.render
-  grammar: null, // TODO: window.GrammarMode.render
-};
-
-function setMode(name) {
-  const container = document.getElementById('app');
-  container.innerHTML = `<p>${name} mode — not implemented yet.</p>`;
-  // TODO: call modes[name](container) once each mode is implemented.
+function esc(s) {
+  return String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 }
 
-document.getElementById('mode-switcher').addEventListener('click', (e) => {
+const modes = { reading: ReadingMode, vocab: VocabMode, grammar: GrammarMode };
+
+function setMode(name) {
+  closePopup();
+  document.querySelectorAll('#mode-switcher button').forEach((b) => {
+    b.classList.toggle('active', b.dataset.mode === name);
+  });
+  modes[name].render(document.getElementById('app'));
+}
+
+document.getElementById('mode-switcher').onclick = (e) => {
   const mode = e.target?.dataset?.mode;
   if (mode) setMode(mode);
-});
+};
+
+// Settings: which LibreTranslate instance to use.
+const ltUrl = document.getElementById('lt-url');
+const ltKey = document.getElementById('lt-key');
+ltUrl.value = Translate.url();
+ltKey.value = Translate.key();
+document.getElementById('lt-save').onclick = () => {
+  Translate.setConfig(ltUrl.value.trim(), ltKey.value.trim());
+  document.getElementById('lt-status').textContent = 'Saved.';
+};
 
 setMode('reading');

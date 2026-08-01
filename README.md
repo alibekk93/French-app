@@ -23,8 +23,21 @@ when needed). Must be free — usage limits are fine, but no payment method
 should be required.
 
 ## Status
-Template only. Nothing is implemented yet — see `docs/spec.md` for the full
-spec and the `js/` stubs for where each piece will live.
+Working MVP. Reading and Vocab modes are implemented; Grammar is a placeholder.
+See `docs/spec.md` for the full spec.
+
+Translation goes through a public **LibreTranslate** instance. Public instances
+move around and some require a free API key, so the endpoint and key are
+editable under **Settings** in the app. To run your own with no limits:
+
+```
+docker run -ti --rm -p 5000:5000 libretranslate/libretranslate
+```
+
+then set the URL to `http://localhost:5000`.
+
+Reading mode fetches URLs through `r.jina.ai`, which handles CORS and article
+extraction in one request. If a page won't load, paste the text instead.
 
 ## Dev setup
 No build step. Open `index.html` directly, or serve the folder statically:
@@ -44,6 +57,7 @@ js/grammar.js         grammar mode (placeholder)
 js/translate.js       translation API wrapper
 js/dictionary.js      dictionary storage (localStorage)
 docs/spec.md          full project spec (source of truth)
+test.js               self-check for the pure logic: node test.js
 ```
 
 ## License
