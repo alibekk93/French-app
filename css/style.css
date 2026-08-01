@@ -1,0 +1,27 @@
+/* Minimal base styles. Kept intentionally sparse — expand per mode as needed. */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  color: #1a1a1a;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border-bottom: 1px solid #ddd;
+}
+
+#mode-switcher button {
+  margin-right: 0.5rem;
+}
+
+main {
+  padding: 1rem;
+}
