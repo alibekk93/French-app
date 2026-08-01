@@ -2,7 +2,10 @@
 // key, so the endpoint + key live in localStorage and are editable in the UI.
 // Self-host fallback: docker run -p 5000:5000 libretranslate/libretranslate
 
-const LT_DEFAULT = 'https://translate.fedilab.app';
+// Verified public instances (no API key needed): argosopentech.com is the
+// project's own documented default. terraprint.co is the fallback if it's
+// ever down. Full list: https://github.com/LibreTranslate/LibreTranslate#mirrors
+const LT_DEFAULT = 'https://translate.argosopentech.com';
 
 const Translate = {
   url() {

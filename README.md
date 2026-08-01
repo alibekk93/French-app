@@ -26,9 +26,11 @@ should be required.
 Working MVP. Reading and Vocab modes are implemented; Grammar is a placeholder.
 See `docs/spec.md` for the full spec.
 
-Translation goes through a public **LibreTranslate** instance. Public instances
-move around and some require a free API key, so the endpoint and key are
-editable under **Settings** in the app. To run your own with no limits:
+Translation goes through a public **LibreTranslate** instance
+(`translate.argosopentech.com` by default — no key required). Public
+instances move around, so the endpoint and key are editable under
+**Settings** in the app; `translate.terraprint.co` is a good fallback. To
+run your own with no limits:
 
 ```
 docker run -ti --rm -p 5000:5000 libretranslate/libretranslate
